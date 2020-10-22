@@ -17,7 +17,7 @@ public class Product {
     Long id;
     String name;
     String logo;
-    boolean enabled;
+    boolean enabled = true;
     LocalDate created;
 
 

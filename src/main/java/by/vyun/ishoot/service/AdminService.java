@@ -23,25 +23,29 @@ public class AdminService {
     ProductRepo productRepo;
 
 
-    void addTemplateAppointmentQuestion(QuestionType type, String text) {
+    public List<TemplateAppointmentQuestion> getAllTemplateAppointmentQuestions() {
+        return questionRepo.findAll();
+    }
+
+    public void addTemplateAppointmentQuestion(String type, String text) {
         TemplateAppointmentQuestion question = new TemplateAppointmentQuestion();
         question.setText(text);
-        question.setType(type);
+        question.setType(QuestionType.valueOf(type));
         question.setCreated(LocalDate.now());
         questionRepo.save(question);
 
     }
 
-    void editTemplateAppointmentQuestion(Long id, QuestionType type, String text) {
+    public void editTemplateAppointmentQuestion(Long id, String type, String text) {
         TemplateAppointmentQuestion question = questionRepo.getFirstById(id);
-        question.setType(type);
+        question.setType(QuestionType.valueOf(type));
         question.setText(text);
         //question.setCreated(LocalDate.now());
         questionRepo.save(question);
 
     }
 
-    void disableTemplateAppointmentQuestion(Long id) {
+    public void disableTemplateAppointmentQuestion(Long id) {
 
 
 
@@ -50,12 +54,21 @@ public class AdminService {
 
 
 
-    void addTemplateAppointmentQuestionAnswer() {
+    public void addTemplateAppointmentQuestionAnswer() {
 
 
 
     }
 
+
+    public void addProduct (String name, String logo) {
+        Product product = new Product();
+        product.setName(name);
+        product.setLogo(logo);
+        product.setCreated(LocalDate.now());
+        productRepo.save(product);
+
+    }
 
     public List<Product> getAllProducts() {
         return productRepo.findAll();

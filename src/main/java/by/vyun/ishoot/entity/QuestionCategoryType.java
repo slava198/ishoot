@@ -2,7 +2,7 @@ package by.vyun.ishoot.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+
 public enum QuestionCategoryType {
     BUYER_QUESTION("Buyer"),
     END_USER_QUESTION("End user"),

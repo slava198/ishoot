@@ -1,6 +1,7 @@
 package by.vyun.ishoot.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -16,9 +17,10 @@ public class TemplateAppointmentQuestion {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     Long id;
+    //@JsonFormat(shape = JsonFormat.Shape.OBJECT)
     QuestionType type;
     String text;
-    boolean enabled;
+    boolean enabled = true;
     LocalDate created;
 
 

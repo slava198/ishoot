@@ -42,7 +42,6 @@ public class RestController {
         questionService.updateQuestion(id, description, type, active);
         return new ResponseEntity("Question updated", HttpStatus.ACCEPTED);
 
-
     }
 
 

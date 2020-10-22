@@ -1,6 +1,7 @@
 package by.vyun.ishoot.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class TemplateReviewQuestion {
     @GeneratedValue(strategy = AUTO)
     private Long id;
     private String description;
+    //@JsonFormat(shape = JsonFormat.Shape.OBJECT)
     private QuestionCategoryType type;
     private boolean active = true;
 
