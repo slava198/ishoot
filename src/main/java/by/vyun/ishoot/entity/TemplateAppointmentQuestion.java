@@ -7,7 +7,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -22,6 +24,7 @@ public class TemplateAppointmentQuestion {
     String text;
     boolean enabled = true;
     LocalDate created;
-
+    //@OneToMany(mappedBy = "question")
+    //List<TemplateAppointmentQuestionAnswer> answers;
 
 }

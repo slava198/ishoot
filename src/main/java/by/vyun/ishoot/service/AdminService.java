@@ -1,8 +1,6 @@
 package by.vyun.ishoot.service;
 
-import by.vyun.ishoot.entity.Product;
-import by.vyun.ishoot.entity.QuestionType;
-import by.vyun.ishoot.entity.TemplateAppointmentQuestion;
+import by.vyun.ishoot.entity.*;
 import by.vyun.ishoot.repo.ProductRepo;
 import by.vyun.ishoot.repo.TemplateAppointmentQuestionAnswerRepo;
 import by.vyun.ishoot.repo.TemplateAppointmentQuestionRepo;
@@ -10,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -24,6 +25,7 @@ public class AdminService {
 
 
     public List<TemplateAppointmentQuestion> getAllTemplateAppointmentQuestions() {
+
         return questionRepo.findAll();
     }
 
@@ -46,19 +48,57 @@ public class AdminService {
     }
 
     public void disableTemplateAppointmentQuestion(Long id) {
+        TemplateAppointmentQuestion question = questionRepo.getFirstById(id);
+        question.setEnabled(false);
+        questionRepo.save(question);
+
+    }
 
 
+    public List<TemplateAppointmentQuestionAnswer> getTemplateAppointmentQuestionAnswers(Long questionId) {
+        //questionRepo.getFirstById(questionId)
+        return answerRepo.getAllByQuestionId(questionId);
+    }
+
+    public List<QuestionAnswersView> getQuestionsWithAnswers(){
+        List<QuestionAnswersView> resultList = new ArrayList<>();
+        for (TemplateAppointmentQuestion question : getAllTemplateAppointmentQuestions() ) {
+            List<String> answers = new ArrayList<>();
+            for (TemplateAppointmentQuestionAnswer answer
+                    : answerRepo.getAllByQuestionId(question.getId())) {
+                answers.add(answer.getText());
+            }
+            resultList.add(new QuestionAnswersView(question, answers));
+        }
+        return resultList;
+    }
+
+
+
+    public void addTemplateAppointmentQuestionAnswer(Long questId, String text) {
+        TemplateAppointmentQuestionAnswer answer = new TemplateAppointmentQuestionAnswer();
+        TemplateAppointmentQuestion question = questionRepo.getFirstById(questId);
+        answer.setText(text);
+        answer.setQuestion(question);
+        answerRepo.save(answer);
+
+    }
+
+    public void editTemplateAppointmentQuestionAnswer(Long id, String text) {
+        TemplateAppointmentQuestionAnswer answer = answerRepo.getFirstById(id);
+        answer.setText(text);
+        answerRepo.save(answer);
+
+    }
+
+    public void deleteTemplateAppointmentQuestionAnswer(Long id) {
+        answerRepo.deleteById(id);
 
     }
 
 
 
 
-    public void addTemplateAppointmentQuestionAnswer() {
-
-
-
-    }
 
 
     public void addProduct (String name, String logo) {
@@ -73,6 +113,7 @@ public class AdminService {
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
+
 
 
 }
