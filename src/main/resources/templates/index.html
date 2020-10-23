@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions with answers</title>
+
+</head>
+<body>
+<div class="alert alert-danger" role="alert" th:if="${error}"
+     th:text="${error}"></div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <h2>Questions</h2>
+        <table class="table" id="questionAnswers">
+            <tr>
+                <th class="btn-dark" onclick="sortTable(1, 'questionAnswers')"><a>Text</a></th>
+                <th class="btn-dark" onclick="sortTable(2, 'questionAnswers')"><a>Answers</a></th>
+            </tr>
+            <th:block th:each="quest : ${questionAnswers}">
+                <tr>
+                    <td th:text="${quest.question.getText()}" height="16px"></td>
+                    <td>
+                        <table>
+                            <th:block th:each="answer : ${quest.getAnswers()}">
+                                <tr>
+                                    <td th:text="${answer.getText()}" height="12px"></td>
+
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</div>
+
+
+</body>
+
+</html>
+

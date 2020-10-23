@@ -4,14 +4,15 @@ import by.vyun.ishoot.entity.*;
 import by.vyun.ishoot.repo.ProductRepo;
 import by.vyun.ishoot.repo.TemplateAppointmentQuestionAnswerRepo;
 import by.vyun.ishoot.repo.TemplateAppointmentQuestionRepo;
+import by.vyun.ishoot.view.AppointmentQuestionAnswerView;
+import by.vyun.ishoot.view.AppointmentQuestionView;
+import by.vyun.ishoot.view.QuestionAnswersView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -60,15 +61,15 @@ public class AdminService {
         return answerRepo.getAllByQuestionId(questionId);
     }
 
-    public List<QuestionAnswersView> getQuestionsWithAnswers(){
+     public List<QuestionAnswersView> getQuestionsWithAnswers(){
         List<QuestionAnswersView> resultList = new ArrayList<>();
         for (TemplateAppointmentQuestion question : getAllTemplateAppointmentQuestions() ) {
-            List<String> answers = new ArrayList<>();
+            List<AppointmentQuestionAnswerView> answers = new ArrayList<>();
             for (TemplateAppointmentQuestionAnswer answer
                     : answerRepo.getAllByQuestionId(question.getId())) {
-                answers.add(answer.getText());
+                answers.add(new AppointmentQuestionAnswerView(answer));
             }
-            resultList.add(new QuestionAnswersView(question, answers));
+            resultList.add(new QuestionAnswersView(new AppointmentQuestionView(question), answers));
         }
         return resultList;
     }
