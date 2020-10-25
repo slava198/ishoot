@@ -6,6 +6,7 @@ import by.vyun.ishoot.entity.TemplateAppointmentQuestion;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 
 
 public class AppointmentQuestionView {
@@ -13,13 +14,15 @@ public class AppointmentQuestionView {
     QuestionType type;
     String text;
     boolean enabled;
-    LocalDate created;
+    Date created;
+    //int ZONE = 3;
 
     public AppointmentQuestionView(TemplateAppointmentQuestion template) {
         this.id = template.getId();
         this.type = template.getType();
         this.text = template.getText();
         this.enabled = template.isEnabled();
+        //Date date = new Date(template.getCreated().getTime() + 3600000L * ZONE);
         this.created = template.getCreated();
     }
 
@@ -55,11 +58,11 @@ public class AppointmentQuestionView {
         this.enabled = enabled;
     }
 
-    public LocalDate getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 }

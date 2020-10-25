@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -23,7 +24,7 @@ public class TemplateAppointmentQuestion {
     QuestionType type;
     String text;
     boolean enabled = true;
-    LocalDate created;
+    Date created;
     //@OneToMany(mappedBy = "question")
     //List<TemplateAppointmentQuestionAnswer> answers;
 

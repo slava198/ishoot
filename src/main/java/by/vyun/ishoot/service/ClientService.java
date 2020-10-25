@@ -14,6 +14,7 @@ import java.net.URL;
 
 import java.net.http.HttpRequest;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -45,7 +46,7 @@ public class ClientService {
         System.out.println(html);
         client.setTerm(html);
         client.setPermission(html);
-        client.setCreated(LocalDate.now());
+        client.setCreated(new Date());
 
         clientRepo.save(client);
     }

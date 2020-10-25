@@ -1,31 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Questions with answers</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body ng-app="">
 <div class="alert alert-danger" role="alert" th:if="${error}"
      th:text="${error}"></div>
 
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-left">
         <h2>Questions</h2>
+    </div>
+    <div class="row justify-content-left">
+        <label class="badge">Search: <input type="text" ng-model="searchText"></label>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+
         <table class="table" id="questionAnswers">
             <tr>
-                <th class="btn-dark" onclick="sortTable(1, 'questionAnswers')"><a>Text</a></th>
-                <th class="btn-dark" onclick="sortTable(2, 'questionAnswers')"><a>Answers</a></th>
+                <th class="btn-dark"><a>Text</a></th>
+                <th class="btn-dark"><a>Text</a></th>
+                <th class="btn-dark"><a>Created</a></th>
+                <th class="btn-dark"><a>Answers</a></th>
+                <!--                +++date-->
             </tr>
             <th:block th:each="quest : ${questionAnswers}">
                 <tr>
                     <td th:text="${quest.question.getText()}" height="16px"></td>
                     <td>
+                        <form class="form-horizontal" method="post" action="/question_edit">
+                            <div class="form-group">
+                                <label class=" col-xs-3 control-label">New text:</label>
+                                <div class="col-xs-5">
+                                    <input type="text" class="form-control" name="text"/>
+                                    <input class="btn btn-outline-dark btn-sm my-1" type="submit" value="Edit">
+                                    <input type="hidden" name="id" th:value="${quest.question.getId()}"/>
+                                    <input type="hidden" name="type" th:value="${quest.question.getType().toString()}"/>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </td>
+
+
+                    <td class="date" th:id="'date_' + ${quest.getQuestion().getId()}"
+                        th:text="${quest.question.getCreated()}" height="16px"></td>
+                    <td>
                         <table>
                             <th:block th:each="answer : ${quest.getAnswers()}">
                                 <tr>
                                     <td th:text="${answer.getText()}" height="12px"></td>
+                                    <td><a class="btn btn-outline-dark btn-sm my-1"
+                                           th:href="@{/answer_del(id = ${answer.getId()})}">Delete</a></td>
+
 
                                 </tr>
                             </th:block>
@@ -39,6 +86,25 @@
 </div>
 
 
+<script>
+
+
+    $(function () {
+        var currentDate = new Date();
+        var offsetByClientTime = (currentDate.getUTCHours() - currentDate.getHours()) * 3600000;
+        var offsetByClientZone = new Date().getTimezoneOffset() * 60000;
+        $('.date').each(function () {
+            var fieldDate = $(this).text();
+            var parsed_date = new Date(fieldDate).getTime();
+            var localed_date1 = parsed_date - offsetByClientTime;
+            var localed_date2 = parsed_date - offsetByClientZone;
+            console.log(new Date(localed_date1));
+            console.log(new Date(localed_date2));
+        });
+    });
+
+
+</script>
 </body>
 
 </html>

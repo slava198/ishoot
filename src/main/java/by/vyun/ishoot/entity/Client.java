@@ -1,10 +1,8 @@
 package by.vyun.ishoot.entity;
 
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Client {
@@ -16,16 +14,16 @@ public class Client {
     String term;
     @Lob
     String permission;
-    LocalDate created;
+    Date created;
 
     public Client() {
     }
 
-    public LocalDate getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 

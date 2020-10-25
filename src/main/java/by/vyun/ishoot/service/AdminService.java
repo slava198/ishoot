@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,7 +35,7 @@ public class AdminService {
         TemplateAppointmentQuestion question = new TemplateAppointmentQuestion();
         question.setText(text);
         question.setType(QuestionType.valueOf(type));
-        question.setCreated(LocalDate.now());
+        question.setCreated(new Date());
         questionRepo.save(question);
 
     }
@@ -99,14 +100,11 @@ public class AdminService {
 
 
 
-
-
-
     public void addProduct (String name, String logo) {
         Product product = new Product();
         product.setName(name);
         product.setLogo(logo);
-        product.setCreated(LocalDate.now());
+        product.setCreated(new Date());
         productRepo.save(product);
 
     }
